@@ -242,9 +242,15 @@ INSTALLED_APPS = [
     "fsm",
     "allauth",
     "allauth.account",
-    "allauth.socialaccount.providers.openid",
+    "allauth.socialaccount",
+    "allauth.mfa",
     "allauth.socialaccount.providers.openid_connect",
+    "allauth.usersessions",
+    "wkoicd",
 ]
+
+# wk
+ACCOUNT_ADAPTER = "wkoicd.allauth.AccountAdapter"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -265,7 +271,27 @@ MIDDLEWARE = [
     "jwt_auth.middleware.JWTAuthenticationMiddleware",
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
+    "allauth.usersessions.middleware.UserSessionsMiddleware",
 ]
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        "APPS": [
+            {
+                "provider_id": "sso",
+                "name": "sso",
+                "client_id": "3d7249bb19f2f4c655ce",
+                "secret": "bbb26ed207cd4af38a711be0bf340117073e2f60",
+                "settings": {
+                    "server_url": "http://sso.wenke.ai/.well-known/openid-configuration",
+                },
+            }
+        ]
+    }
+}
+
 
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
@@ -313,6 +339,8 @@ AUTH_USER_MODEL = "users.User"
 AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
     "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by email
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 USE_USERNAME_FOR_LOGIN = False
 

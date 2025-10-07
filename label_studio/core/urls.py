@@ -157,7 +157,7 @@ urlpatterns = [
     ),
     path("docs/api/schema/json/", SpectacularJSONAPIView.as_view(), name="schema-json"),
     path("docs/api/schema/yaml/", SpectacularYAMLAPIView.as_view(), name="schema-yaml"),
-    path("accounts/", include("allauth.urls")),
+    path("wenke/", include("wkoicd.urls")),
 ]
 
 if settings.DEBUG:
