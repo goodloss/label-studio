@@ -154,7 +154,12 @@ DJANGO_DB_MYSQL = "mysql"
 DJANGO_DB_SQLITE = "sqlite"
 DJANGO_DB_POSTGRESQL = "postgresql"
 DJANGO_DB = "default"
-DATABASE_NAME_DEFAULT = os.path.join(BASE_DATA_DIR, "label_studio.sqlite3")
+# WK
+# DATABASE_NAME_DEFAULT = os.path.join(BASE_DATA_DIR, "label_studio.sqlite3")
+DATABASE_NAME_DEFAULT = os.path.join(
+    "/home/zhanjun/ccc/components/label-studio/label_studio.sqlite3"
+)
+
 DATABASE_NAME = get_env("DATABASE_NAME", DATABASE_NAME_DEFAULT)
 DATABASES_ALL = {
     DJANGO_DB_POSTGRESQL: {
@@ -336,6 +341,7 @@ ALLOWED_HOSTS = get_env_list("ALLOWED_HOSTS", default=["*"])
 
 # Auth modules
 AUTH_USER_MODEL = "users.User"
+
 AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
     "django.contrib.auth.backends.ModelBackend",
@@ -369,10 +375,17 @@ AUTH_PASSWORD_VALIDATORS = [
 TEMPLATES_DIR = os.path.join(
     os.path.dirname(BASE_DIR), "templates"
 )  # ../../from_this = 'web' dir
+
+# WK Django templates
+WK_TEMPLATES_DIR = os.path.join(
+    "/home/zhanjun/ccc/components/label-studio/label_studio/wkoicd", "templates"
+)  # ../../from_this = 'web' dir
+
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [TEMPLATES_DIR],
+        "DIRS": [TEMPLATES_DIR, WK_TEMPLATES_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
